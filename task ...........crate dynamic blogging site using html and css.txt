@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Blogging Site</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    
+</head>
+
+<body>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <header>
+        <h1>Welcome to My Blog</h1>
+        <p>Sharing thoughts, insights, and stories</p>
+    </header>
+
+    <div class="container">
+        <section class="blog-posts">
+            <div class="post">
+                <img src="https://via.placeholder.com/400x200" alt="Post Image">
+                <h2>Blog Post Title 1</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, illum.</p>
+                <a href="#">Read More</a>
+            </div>
+
+            <div class="post">
+                <img src="https://via.placeholder.com/400x200" alt="Post Image">
+                <h2>Blog Post Title 2</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, illum.</p>
+                <a href="#">Read More</a>
+            </div>
+
+            <div class="post">
+                <img src="https://via.placeholder.com/400x200" alt="Post Image">
+                <h2>Blog Post Title 3</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, illum.</p>
+                <a href="#">Read More</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Simple Blog. All Rights Reserved.</p>
+    </footer>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= post.title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1><%= post.title %></h1>
+        <a href="/posts">Back to Posts</a>
+    </header>
+    <main>
+        <p><%= post.content %></p>
+        <a href="/posts/<%= post.id %>/edit">Edit</a>
+        <form action="/posts/<%= post.id %>?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit">Delete</button>
+        </form>
+    </main>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Edit Post</h1>
+        <a href="/posts/<%= post.id %>">Back to Post</a>
+    </header>
+    <main>
+        <form action="/posts/<%= post.id %>?_method=PUT" method="POST">
+            <input type="text" name="title" placeholder="Post Title" value="<%= post.title %>" required>
+            <textarea name="content" placeholder="Post Content" required><%= post.content %></textarea>
+            <button type="submit">Update Post</button>
+        </form>
+    </main>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Post</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Create a New Post</h1>
+        <a href="/posts">Back to Posts</a>
+    </header>
+    <main>
+        <form action="/posts" method="POST">
+            <input type="text" name="title" placeholder="Post Title" value="<%= post.title %>" required>
+            <textarea name="content" placeholder="Post Content" required><%= post.content %></textarea>
+            <button type="submit">Create Post</button>
+        </form>
+    </main>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>My Blog</h1>
+        <a href="/posts/new">Create New Post</a>
+    </header>
+    <main>
+        <% if (posts.length > 0) { %>
+            <% posts.forEach(post => { %>
+                <div class="post">
+                    <h2><a href="/posts/<%= post.id %>"><%= post.title %></a></h2>
+                    <p><%= post.content.substring(0, 100) %>...</p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No posts available.</p>
+        <% } %>
+    </main>
+</body>
+</html>
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+
+        header {
+            background-color: #444;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .blog-posts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .post {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: calc(33.333% - 40px);
+        }
+
+        .post img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .post h2 {
+            font-size: 1.5rem;
+            margin: 15px 0;
+        }
+
+        .post p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .post a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: 500;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    
+        // Sample blog posts data
+        const posts = [
+            {
+                title: "Blog Post Title 1",
+                content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, illum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar libero id lorem sollicitudin rhoncus.",
+                imageUrl: "https://via.placeholder.com/400x200",
+            },
+            {
+                title: "Blog Post Title 2",
+                content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, illum. Curabitur at elit vitae nisl faucibus vehicula non vel mi.",
+                imageUrl: "https://via.placeholder.com/400x200",
+            },
+            {
+                title: "Blog Post Title 3",
+                content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, illum. Phasellus vehicula justo vel nisi placerat volutpat. Morbi a auctor nunc.",
+                imageUrl: "https://via.placeholder.com/400x200",
+            }
+        ];
+
+        // Function to display blog posts
+        function displayPosts() {
+            const blogPostsContainer = document.getElementById('blog-posts');
+            blogPostsContainer.innerHTML = '';
+
+            posts.forEach((post, index) => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                postElement.innerHTML = `
+                    <img src="${post.imageUrl}" alt="Post Image">
+                    <h2>${post.title}</h2>
+                    <p>${post.content.slice(0, 100)}...</p>
+                    <a href="#" onclick="viewPost(${index})">Read More</a>
+                `;
+                blogPostsContainer.appendChild(postElement);
+            });
+        }
+
+        // Function to view a specific post in detail
+        function viewPost(index) {
+            const postDetail = document.getElementById('post-detail');
+            const blogPostsContainer = document.getElementById('blog-posts');
+
+            // Display the detailed post
+            document.getElementById('post-detail-title').innerText = posts[index].title;
+            document.getElementById('post-detail-content').innerText = posts[index].content;
+            document.getElementById('post-detail-img').src = posts[index].imageUrl;
+
+            // Toggle visibility
+            blogPostsContainer.style.display = 'none';
+            postDetail.style.display = 'block';
+        }
+
+        // Function to go back to the list of posts
+        function goBack() {
+            const postDetail = document.getElementById('post-detail');
+            const blogPostsContainer = document.getElementById('blog-posts');
+
+            postDetail.style.display = 'none';
+            blogPostsContainer.style.display = 'flex';
+        }
+
+        // Initialize the blog by displaying posts
+        displayPosts();
+ const express = require('express');
+const router = express.Router();
+const Post = require('../models/post');
+
+// Get all posts
+router.get('/', async (req, res) => {
+    try {
+        const posts = await Post.find().sort({ createdAt: 'desc' });
+        res.render('index', { posts: posts });
+    } catch (err) {
+        console.error(err);
+        res.redirect('/');
+    }
+});
+
+// New post form
+router.get('/new', (req, res) => {
+    res.render('new', { post: new Post() });
+});
+
+// Create new post
+router.post('/', async (req, res) => {
+    const post = new Post({
+        title: req.body.title,
+        content: req.body.content
+    });
+    try {
+        await post.save();
+        res.redirect(`/posts/${post.id}`);
+    } catch (err) {
+        console.error(err);
+        res.render('new', { post: post });
+    }
+});
+
+// Show a single post
+router.get('/:id', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        res.render('show', { post: post });
+    } catch (err) {
+        console.error(err);
+        res.redirect('/posts');
+    }
+});
+
+// Edit post form
+router.get('/:id/edit', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        res.render('edit', { post: post });
+    } catch (err) {
+        console.error(err);
+        res.redirect('/posts');
+    }
+});
+
+// Update a post
+router.put('/:id', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        post.title = req.body.title;
+        post.content = req.body.content;
+        await post.save();
+        res.redirect(`/posts/${post.id}`);
+    } catch (err) {
+        console.error(err);
+        res.render('edit', { post: post });
+    }
+});
+
+// Delete a post
+router.delete('/:id', async (req, res) => {
+    try {
+        await Post.findByIdAndDelete(req.params.id);
+        res.redirect('/posts');
+    } catch (err) {
+        console.error(err);
+        res.redirect('/posts');
+    }
+});
+
+module.exports = router;
+const mongoose = require('mongoose');
+
+const postSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+module.exports = mongoose.model('Post', postSchema);
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const app = express();
+const Post = require('./models/post');
+const postRoutes = require('./routes/posts');
+
+// Connect to MongoDB
+mongoose.connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+const db = mongoose.connection;
+db.on('error', (error) => console.error(error));
+db.once('open', () => console.log('Connected to MongoDB'));
+
+// Set up view engine and middleware
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
+
+// Routes
+app.use('/posts', postRoutes);
+
+// Root route
+app.get('/', (req, res) => {
+    res.redirect('/posts');
+});
+
+// Start the server
+app.listen(3000, () => console.log('Server started on http://localhost:3000'));
+/*Cod*/
+blogging-site/
+│
+├── models/
+│   └── post.js
+├── routes/
+│   └── posts.js
+├── views/
+│   ├── index.ejs
+│   ├── new.ejs
+│   ├── edit.ejs
+│   └── show.ejs
+├── .env
+├── app.js
+├── package.json
+└── package-lock.json
+..................
+..............bash.....
+mkdir blogging-site
+cd blogging-site
+npm init -y
+npm install express mongoose ejs dotenv
+...........................
+plaintext
+
+DATABASE_URL=mongodb://localhost:27017/blogging-site
+
